@@ -12,9 +12,10 @@ class FirstTest extends TestCase
      *
      * @return void
      */
-    public function test_first()
+    public function test_displayPiscinePage()
     {
         $response = $this->get('/piscine');
+        $response->assertStatus(200);
         $response->assertSeeText("Piscine");
     }
 }

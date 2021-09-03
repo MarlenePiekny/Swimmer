@@ -15,6 +15,6 @@ class DataBaseTest extends TestCase
      */
     public function test_database_migrations()
     {
-        $this->assertDatabaseCount('migrations', 6);
+        $this->assertDatabaseCount('migrations', 4);
     }
 }

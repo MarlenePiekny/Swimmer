@@ -7,6 +7,17 @@ on:
     branches: [ main ]
 
 jobs:
+  services:
+    postgres:
+      image: postgres:13
+      env:
+        POSTGRES_USER: marlene
+        POSTGRES_PASSWORD: marlene
+        POSTGRES_DB: swimmer_db
+      ports:
+      - 5432:5432
+      options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
   laravel-tests:
 
     runs-on: ubuntu-latest
@@ -30,6 +41,11 @@ jobs:
         touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
+        DB_CONNECTION=pgsql
+        DB_HOST=pgsql
+        DB_PORT=5432
+        DB_DATABASE=swimmer_db
+        DB_USERNAME=marlene
+        DB_PASSWORD=marlene
       run: vendor/bin/phpunit
+      

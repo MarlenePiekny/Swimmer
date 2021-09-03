@@ -15,7 +15,7 @@ class FirstTest extends TestCase
     public function test_displayPiscinePage()
     {
         $response = $this->get('/piscine');
-        $response->assertStatus(500);
+        $response->assertStatus(200);
         $response->assertSeeText("Piscine");
     }
 }

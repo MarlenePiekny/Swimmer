@@ -61,5 +61,5 @@ jobs:
       env:
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
-      run: vendor/bin/phpunit --coverage-text
+      run: php artisan test
       

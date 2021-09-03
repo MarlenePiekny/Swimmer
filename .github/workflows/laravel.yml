@@ -54,7 +54,7 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
       run: php artisan migrate -v
-        env:
+      env:
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
     - name: Execute tests (Unit and Feature tests) via PHPUnit

@@ -17,7 +17,7 @@ jobs:
       QUEUE_CONNECTION: redis
       SESSION_DRIVER: redis
       DB_CONNECTION: pgsql
-      DB_HOST: pgsql
+      DB_HOST: localhost
       DB_PASSWORD: marlene
       DB_USERNAME: marlene
       DB_DATABASE: swimmer_db

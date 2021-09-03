@@ -1,6 +1,3 @@
-artisan:
-	docker-compose exec php /app/artisan
-
 build:
 	docker-compose -f docker-compose-production.yml build
 
@@ -54,6 +51,12 @@ laravel-cache:
 
 laravel-storage:
 	docker-compose run --rm php /app/artisan storage:link
+
+new-featuretest:
+	docker-compose exec php /app/artisan make:test $(name)
+
+new-unittest:
+	docker-compose exec php /app/artisan make:test $(name) --unit
 
 pull:
 	docker-compose -f docker-compose-production.yml pull

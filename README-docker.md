@@ -108,6 +108,8 @@ MailHog capture all mails form the application.
 - `laravel-install` : Install Laravel with Composer
 - `laravel-cache` : Generate all cache for Laravel
 - `laravel-storage` : Create store link for Laravel
+- `new-featuretest name=MyFeatureTest` : Create a new feature test with MyFeatureTest as name
+- `new-unittest name=MyUnitTest` : Create a new unit test with MyUnitTest as name
 - `pull` : Pull the lastest Docker containers
 - `restart` : Restart Docker containers
 - `restart-dev` : Restart Docker development containers

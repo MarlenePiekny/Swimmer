@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/piscine', function () {
-    return view('piscine');
+            return view('piscine');
 });

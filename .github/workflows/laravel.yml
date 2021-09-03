@@ -7,20 +7,38 @@ on:
     branches: [ main ]
 
 jobs:
-  services:
-    postgres:
-      image: postgres:13
-      env:
-        POSTGRES_USER: marlene
-        POSTGRES_PASSWORD: marlene
-        POSTGRES_DB: swimmer_db
-      ports:
-      - 5432:5432
-      options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
   laravel-tests:
 
     runs-on: ubuntu-latest
+
+    env:
+      BROADCAST_DRIVER: log
+      CACHE_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      SESSION_DRIVER: redis
+      DB_CONNECTION: pgsql
+      DB_HOST: pgsql
+      DB_PASSWORD: marlene
+      DB_USERNAME: marlene
+      DB_DATABASE: swimmer_db
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: marlene
+          POSTGRES_PASSWORD: marlene
+          POSTGRES_DB: swimmer_db
+        ports:
+          - 5432/tcp
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+
+      redis:
+        image: redis
+        ports:
+          - 6379/tcp
+        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
@@ -38,14 +56,10 @@ jobs:
     - name: Create Database
       run: |
         mkdir -p database
-        touch database/database.sqlite
+        touch database/database.pgsql
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION=pgsql
-        DB_HOST=pgsql
-        DB_PORT=5432
-        DB_DATABASE=swimmer_db
-        DB_USERNAME=marlene
-        DB_PASSWORD=marlene
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
       run: vendor/bin/phpunit
       
